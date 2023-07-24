@@ -36,16 +36,18 @@ const Navbar = () => {
             {item.title}
           </NavLink>
         ))}
-        {isActive ? (
-          <Button className="bg-orange-500 p-1 rounded-md cursor-pointer" onClick={() => navigate("/register")}>Register</Button>
+        {isActive !== "true" ? (
+          <Button className="bg-orange-500 p-1 rounded-md cursor-pointer" onClick={() => navigate("/register")}>
+            Register
+          </Button>
         ) : (
           <>
             <div className="w-8 h-8 bg-red-200 rounded-full cursor-pointer" onClick={profileHandler}></div>
-            <div className="w-32 absolute top-10 right-0 bg-slate-950 shadow-xl">
+            <div className="w-32 absolute top-10 right-0 bg-slate-950 shadow-xl hidden" id="profileControl">
               <Button className=" p-1 cursor-pointer flex items-center gap-2">
                 <FaUserEdit /> Profile
               </Button>
-              <Button className=" p-1 cursor-pointer flex items-center gap-2">
+              <Button className=" p-1 cursor-pointer flex items-center gap-2" onClick={logOutHandler}>
                 <AiOutlineLogout /> Log Out
               </Button>
             </div>
@@ -57,7 +59,13 @@ const Navbar = () => {
 };
 
 const profileHandler = () => {
-  localStorage.setItem("active", "true");
+  const profileControl = document.getElementById("profileControl");
+  profileControl.classList.toggle("hidden");
 };
+
+const logOutHandler = () => {
+  localStorage.clear()
+  window.location.reload()
+}
 
 export default Navbar;
